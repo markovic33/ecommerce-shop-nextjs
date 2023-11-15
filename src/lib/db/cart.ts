@@ -1,4 +1,4 @@
-import { Cart, Prisma } from "@prisma/client";
+import { Cart, CartItem, Prisma } from "@prisma/client";
 import { prisma } from "./prisma";
 import { cookies } from "next/dist/client/components/headers";
 import { getServerSession } from "next-auth";
@@ -110,7 +110,7 @@ export async function mergeAnonymusCartIntoUserCart(userId: string) {
                 data:{
                     items: {
                         createMany: {
-                            data: mergedCartItems.map(item => ({
+                            data: mergedCartItems.map((item) => ({
                                 productId: item.productId,
                                 quantity: item.quantity,
                             })),
@@ -124,7 +124,7 @@ export async function mergeAnonymusCartIntoUserCart(userId: string) {
                     userId,
                     items: {
                         createMany: {
-                            data: localCart.items.map(item => ({
+                            data: localCart.items.map((item) => ({
                                 productId: item.productId,
                                 quantity: item.quantity,
                             }))
@@ -142,8 +142,8 @@ export async function mergeAnonymusCartIntoUserCart(userId: string) {
     });
 }
 
-function mergeCartItem(...cartItems: CartItem[][]) {
-    return cartItem.reduce((acc, items) => {
+function mergeCartItem(...cartItems: CartItem[][]): CartItem[] {
+    return cartItems.reduce((acc, items) => {
         items.forEach((item) => {
             const existingItem = acc.find((i) => i.productId === item.productId);
             if(existingItem) {
