@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db/prisma";
 import ProductCard from "@/components/ProductCard";
+import { Metadata } from "next";
 
 
 interface SearchPageProps {
